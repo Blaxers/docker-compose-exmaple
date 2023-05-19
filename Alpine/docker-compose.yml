@@ -1,0 +1,26 @@
+version: '3'
+services:
+  ssh1:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "601:22"
+  ssh2:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "602:22"
+  ssh3:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "603:22"
+  ssh4:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "604:22"

@@ -1,0 +1,1 @@
+docker run -p 601:22 --name ub01 ubuntu:latest /usr/sbin/sshd -D

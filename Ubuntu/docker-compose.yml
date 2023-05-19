@@ -1,0 +1,42 @@
+version: '1'
+networks:
+  monitoring:
+    name: exporter-prometheus-grafana
+    external: true
+services:
+  ssh1:
+    build: 
+      context: .
+      dockerfile: dockerfile
+    networks:
+      - monitoring
+    ports:
+      - "601:22"
+      - "771:9100"
+  ssh2:
+    build: 
+      context: .
+      dockerfile: dockerfile
+    networks:
+      - monitoring
+    ports:
+      - "602:22"
+      - "772:9100"
+  ssh3:
+    build: 
+      context: .
+      dockerfile: dockerfile
+    networks:
+      - monitoring
+    ports:
+      - "603:22"
+      - "773:9100"
+  ssh4:
+    build: 
+      context: .
+      dockerfile: dockerfile
+    networks:
+      - monitoring
+    ports:
+      - "604:22"
+      - "774:9100"

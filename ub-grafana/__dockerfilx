@@ -1,0 +1,33 @@
+FROM ubuntu:latest
+# Update and installation package
+RUN apt update && apt install  openssh-server sudo wget -y
+# Create a user “sshuser” and group “sshgroup”
+RUN groupadd sshgroup && useradd -ms /bin/bash -g sshgroup sshuser
+# Give root priviliages
+RUN usermod -g root sshuser
+# create new password
+RUN echo 'sshuser:password' | sudo chpasswd
+# # grant root priviliages to user
+# RUN usermod -aG sudo sshuser
+# # sudo without sudo and password
+# RUN wget -O /etc/sudoers https://raw.githubusercontent.com/Blaxers/sshkey.pub/main/sudoers
+# # Create sshuser directory in home
+# RUN mkdir -p /home/sshuser/.ssh
+# # copy key to authorized keys
+# COPY ./key.pub /home/sshuser/.ssh/authorized_keys
+# # change ownership of the key file. 
+# RUN chown sshuser:sshgroup /home/sshuser/.ssh/authorized_keys && chmod 600 /home/sshuser/.ssh/authorized_keys
+# # Start SSH service
+RUN service ssh start
+# Expose docker port 22
+EXPOSE 22
+################################### Install Grafana
+RUN sudo apt-get install -y apt-transport-https
+RUN sudo apt-get install -y software-properties-common wget
+RUN sudo wget -q -O /usr/share/keyrings/grafana.key https://apt.grafana.com/gpg.key
+RUN echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+RUN sudo apt-get update
+RUN sudo apt-get install grafana -y
+
+
+CMD ["/usr/sbin/sshd","-D"]

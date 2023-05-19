@@ -1,0 +1,17 @@
+version: '1'
+networks:
+  monitoring:
+    name: exporter-prometheus-grafana
+    external: true
+services:
+  ubuntu-sshv2:
+    build: 
+      context: .
+      dockerfile: dockerfile
+    labels:
+      - "ubuntu-with-ssh"
+    networks:
+      - monitoring
+    ports:
+      - "1901-1999:22"
+      - "8201-8299:9100"

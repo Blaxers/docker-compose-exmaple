@@ -1,0 +1,17 @@
+FROM alpine:3.17.3
+VOLUME [ “/home/ubuntu/Ansible/Images/Alpine” ]
+RUN apk add --update --no-cache openrc
+RUN apk add --update --no-cache openssh
+RUN rc-update add sshd && service sshd start
+
+RUN service sshd start
+
+
+
+# RUN mkdir /var/run/sshd
+# RUN echo 'root:password' | chpasswd
+# COPY ./sshd_config /etc/ssh/
+# COPY ./ub-key.pub 
+
+EXPOSE 601:22
+CMD ["/usr/sbin/sshd", "-D", "-e"]
